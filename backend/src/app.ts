@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import fs from 'fs';
+import path from 'path';
 
 import { config } from './config/env';
 import database from './config/database';
@@ -13,8 +15,10 @@ import authRoutes from './routes/auth';
 import sweetRoutes from './routes/sweets';
 import ordersRoutes from './routes/orders';
 
-// Load swagger document
-const swaggerDocument = YAML.load('./swagger.yaml');
+// Note: Do not eagerly load the swagger file at module import time.
+// In production deployments the file may not be present at the same
+// relative path (causing an exception). Load it lazily inside
+// `initializeSwagger()` from resolved candidate locations.
 
 class App {
   public app: express.Application;
@@ -39,7 +43,7 @@ class App {
     // CORS
     this.app.use(cors({
       origin: config.nodeEnv === 'production' 
-        ? ['https://your-frontend-domain.com']
+        ? ['https://ai-kata-sweetshop.vercel.app/']
         : ['http://localhost:3000', 'http://localhost:5173'],
       credentials: true
     }));
@@ -88,7 +92,27 @@ class App {
 
   private initializeSwagger(): void {
     if (config.nodeEnv !== 'production') {
-      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+      // Try multiple locations where swagger.yaml could be placed
+      const candidates = [
+        path.join(__dirname, '..', '..', 'swagger.yaml'), // built/dist layout
+        path.join(__dirname, '..', 'swagger.yaml'), // src adjacent
+        path.join(process.cwd(), 'swagger.yaml'), // current working dir
+        path.join(process.cwd(), 'backend', 'swagger.yaml'), // monorepo layout
+      ];
+
+      const swaggerPath = candidates.find(p => fs.existsSync(p));
+      if (!swaggerPath) {
+        console.warn('[Swagger] swagger.yaml not found in expected locations, skipping /api-docs');
+        return;
+      }
+
+      try {
+        const swaggerDocument = YAML.load(swaggerPath);
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        console.log(`[Swagger] Loaded documentation from ${swaggerPath}`);
+      } catch (err) {
+        console.warn('[Swagger] Failed to load swagger.yaml, skipping /api-docs', err);
+      }
     }
   }
 
