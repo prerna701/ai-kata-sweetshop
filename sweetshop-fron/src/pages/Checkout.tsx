@@ -46,7 +46,7 @@ export default function Checkout() {
         paymentMethod: 'COD'
       }
 
-      const created = await orderService.createOrder(payload)
+      await orderService.createOrder(payload)
 
       // Clear cart
       clearCart()

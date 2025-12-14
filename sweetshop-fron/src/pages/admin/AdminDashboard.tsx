@@ -22,7 +22,7 @@ const CATEGORIES = ['Chocolate', 'Candy', 'Biscuit', 'Cake', 'Pastry', 'Ice Crea
 export default function AdminDashboard() {
   const [sweets, setSweets] = useState<Sweet[]>([])
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingSweet, setEditingSweet] = useState<Sweet | null>(null)
@@ -271,8 +271,8 @@ export default function AdminDashboard() {
                   <TableCell>₹{sweet.price}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <span>{sweet.stock}</span>
-                      {sweet.stock < 5 && (
+                      <span>{sweet.stock ?? sweet.quantity ?? 0}</span>
+                      {(sweet.stock ?? sweet.quantity ?? 0) < 5 && (
                         <span className="text-xs px-2 py-1 bg-destructive/10 text-destructive rounded">
                           Low
                         </span>

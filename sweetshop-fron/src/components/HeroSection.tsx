@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import fallback from "/sweet-hero.jpg";
+
+const fallback = '/sweet-hero.jpg'
 
 export default function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
