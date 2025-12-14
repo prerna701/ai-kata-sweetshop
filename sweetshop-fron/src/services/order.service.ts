@@ -1,4 +1,4 @@
-const API_BASE =  'http://localhost:3000/api';
+const API_BASE =  'https://ai-kata-sweetshop-7tuv.vercel.app/api';
 
 export const orderService = {
   createOrder: async (orderData: any) => {
