@@ -1141,6 +1141,18 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 ---
 
+## 🖼️ Images
+
+Attached images from the repository's images folder:
+
+- ![image.png](images/image.png)
+- ![Screenshot 2025-12-14 211746.png](images/Screenshot%202025-12-14%20211746.png)
+- ![Screenshot 2025-12-14 211806.png](images/Screenshot%202025-12-14%20211806.png)
+- ![Screenshot 2025-12-14 211820.png](images/Screenshot%202025-12-14%20211820.png)
+- ![Screenshot 2025-12-14 211834.png](images/Screenshot%202025-12-14%20211834.png)
+
+---
+
 **Made with ❤️ and AI assistance for sweet lovers!** 🍬
 
 For questions or suggestions, please open an issue on GitHub.
