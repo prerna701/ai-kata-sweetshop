@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+/* 
+/* ================= ROOT THEME VARIABLES ================= */
+
+:root {
+  /* LIGHT MODE */
+  --background: 255 255 255;   /* white */
+  --background-accent: 255 245 238; /* warm accent */
+  --foreground: 17 17 17;      /* near black */
+  --primary: 0 120 255;
+  --secondary: 0 200 150;
+  --card: 255 255 255;
+  --border: 220 220 220;
+}
+
+.dark {
+  /* DARK MODE */
+  --background: 17 17 17;      /* black */
+  --background-accent: 34 34 34;
+  --foreground: 255 255 255;   /* white */
+  --card: 34 34 34;
+  --border: 63 63 70;
+}
+/* ================= GLOBAL BASE ================= */
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, rgb(var(--background)) 0%, rgb(var(--background-accent)) 100%);
+  color: rgb(var(--foreground));
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ================= SHADCN SUPPORT ================= */
+/* shadcn components automatically use these vars */
+:root {
+  --radius: 0.5rem;
+}
+
+/* ================= CARD HELPER (OPTIONAL) ================= */
+.card {
+  background-color: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+} */
+
+/* ================= GRID BACKGROUND ================= */
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    );
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark .grid-background {
+  background:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    );
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.85));
+}
+
+/* ================= HERO TEXT ================= */
+.gradient-title {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--foreground)),
+    rgba(var(--foreground), 0.6),
+    rgba(var(--foreground), 0.3)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-move 3s linear infinite;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ================= HERO IMAGE ================= */
+.hero-image-wrapper {
+  perspective: 10000px;
+}
+
+.hero-image {
+  transform: rotateX(15deg) scale(1);
+  transition: transform 0.5s ease-out, opacity 0.3s ease;
+  will-change: transform;
+}
+
+.hero-image.scrolled {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
