@@ -47,7 +47,7 @@ export class AuthController {
       res.cookie('token', token, cookieOptions).json({
         success: true,
         message: 'Login successful',
-        data: { user }
+        data: { user ,token}
       });
     } catch (error: any) {
       const statusCode = error.statusCode || 500;
